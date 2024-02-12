@@ -6,7 +6,7 @@ on:
       - main
   schedule:
     # Runs at the start 5 minutes
-    - cron: '*/5 * * * *'
+    - cron: '0 * * * *'
 
 jobs:
   execute-node-script:
