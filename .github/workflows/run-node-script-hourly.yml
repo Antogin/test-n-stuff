@@ -3,7 +3,7 @@ name: Run Node.js Script Hourly
 on:
   schedule:
     # Runs at the start of every hour
-    - cron: '0 * * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   execute-node-script:
