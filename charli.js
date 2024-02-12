@@ -118,7 +118,7 @@ function extractUrlsFromHtml(htmlString) {
 
         // console.log(urls); // Process the received data
 
-        const xcxUrl = urls.find(el => el.includes('milan'));
+        const xcxUrl = urls.find(el => el.includes('chicago'));
 
 
         if(xcxUrl){
