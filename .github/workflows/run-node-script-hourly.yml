@@ -1,0 +1,24 @@
+name: Run Node.js Script Hourly
+
+on:
+  schedule:
+    # Runs at the start of every hour
+    - cron: '0 * * * *'
+
+jobs:
+  execute-node-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18' # Specify your Node.js version here
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run script
+        run: node charli.js
