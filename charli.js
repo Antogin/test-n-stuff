@@ -95,11 +95,11 @@ async function commitAndPushChanges(branchName, commitMessage) {
 
 function extractUrlsFromHtml(htmlString) {
     // Use the DOMParser to parse the HTML string
-    const doc = new JSDOM(htmlString).window.document;
+    const document = new JSDOM(htmlString).window.document;
 
-    console.log(doc)
+    // console.log(document)
     // Query all <a> elements in the parsed document
-    const links = doc.querySelectorAll('a');
+    const links = document.querySelectorAll('a');
 
     // Extract the href attributes from each <a> element
     const urls = Array.from(links).map(link => link.href);
@@ -116,9 +116,9 @@ function extractUrlsFromHtml(htmlString) {
         const urls = extractUrlsFromHtml(data)
         // console.log(data); // Process the received data
 
-        // console.log(urls); // Process the received data
+        console.log(urls); // Process the received data
 
-        const xcxUrl = urls.find(el => el.includes('sydney'));
+        const xcxUrl = urls.find(el => el.includes('seoul'));
 
 
         if(xcxUrl){
@@ -133,7 +133,7 @@ function extractUrlsFromHtml(htmlString) {
 
             await sleep(2000);
 
-            commitAndPushChanges(last, xcxUrl)
+            commitAndPushChanges(last, xcxUrl);
         }
     } catch (error) {
         console.error('Error fetching data:', error);
