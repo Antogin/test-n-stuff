@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jsdom": "^24.0.0"
+    "jsdom": "^24.0.0",
+    "simple-git": "^3.22.0"
   }
 }

@@ -1,4 +1,8 @@
 const jsdom = require("jsdom");
+const simpleGit = require('simple-git');
+const git = simpleGit();
+const fs = require('fs');
+const path = require('path');
 const { JSDOM } = jsdom;
 
 const createPullRequest = async () => {
@@ -39,6 +43,56 @@ const createPullRequest = async () => {
         console.error('Error:', error);
     }
 };
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+
+function appendFile(txt) {
+    const filePath = path.join(__dirname, 'README.md');
+
+    // Define the string you want to append
+    const appendString = `\n## New URL : ${txt}`;
+    
+    // Use fs.appendFile to append the string to the file
+    fs.appendFileSync(filePath, appendString, (err) => {
+        if (err) {
+            console.error('Failed to append to file:', err);
+        } else {
+            console.log('Content appended successfully.');
+        }
+    });
+}
+// Define the path to the Markdown file
+
+
+
+async function commitAndPushChanges(branchName, commitMessage) {
+    try {
+        // Check current status to ensure the working directory is clean
+        const status = await git.status();
+        if (status.files.length === 0) {
+            console.log('No changes to commit.');
+            return;
+        }
+
+        // Checkout a new branch
+        await git.checkoutLocalBranch(branchName);
+
+        // Add all changes to staging
+        await git.add('.');
+
+        // Commit changes
+        await git.commit(commitMessage);
+
+        // Push changes to remote
+        await git.push('origin', branchName);
+
+        console.log('Changes committed and pushed to branch:', branchName);
+    } catch (error) {
+        console.error('Failed to commit and push changes:', error);
+    }
+}
+
 function extractUrlsFromHtml(htmlString) {
     // Use the DOMParser to parse the HTML string
     const doc = new JSDOM(htmlString).window.document;
@@ -70,6 +124,16 @@ function extractUrlsFromHtml(htmlString) {
         if(xcxUrl){
             console.log(xcxUrl); // Process the received data
 
+            const splitted = xcxUrl.split('/');
+
+            const last = splitted[splitted.length - 1]
+            console.log(last); // Process the received data
+
+            appendFile(xcxUrl);
+
+            await sleep(2000);
+
+            commitAndPushChanges(last, xcxUrl)
         }
     } catch (error) {
         console.error('Error fetching data:', error);
