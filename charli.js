@@ -53,8 +53,6 @@ async function commitAndPushChanges(branchName, commitMessage) {
 function extractUrlsFromHtml(htmlString) {
     // Use the DOMParser to parse the HTML string
     const doc = new JSDOM(htmlString).window.document;
-
-    console.log(doc)
     // Query all <a> elements in the parsed document
     const links = doc.querySelectorAll('a');
 
