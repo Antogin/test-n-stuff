@@ -5,47 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = jsdom;
 
-const createPullRequest = async () => {
-    const token = 'YOUR_GITHUB_TOKEN'; // Replace with your GitHub personal access token
-    const owner = 'REPO_OWNER'; // Replace with the repository owner's username
-    const repo = 'REPO_NAME'; // Replace with the repository name
-    const title = 'Pull Request Title'; // The title of the pull request
-    const head = 'feature-branch'; // The name of your branch with changes
-    const base = 'main'; // The name of the branch you want to merge your changes into
-    const body = 'Description of the pull request'; // The body of the pull request
-
-    const url = `https://api.github.com/repos/${owner}/${repo}/pulls`;
-
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Authorization': `token ${token}`,
-                'Accept': 'application/vnd.github.v3+json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                title,
-                head,
-                base,
-                body
-            })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            console.log('Pull request created:', data.html_url);
-        } else {
-            console.error('Failed to create pull request:', data);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
-
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-
 
 function appendFile(txt) {
     const filePath = path.join(__dirname, 'README.md');
@@ -62,9 +22,6 @@ function appendFile(txt) {
         }
     });
 }
-// Define the path to the Markdown file
-
-
 
 async function commitAndPushChanges(branchName, commitMessage) {
     try {
