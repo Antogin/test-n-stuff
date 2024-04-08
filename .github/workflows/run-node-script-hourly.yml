@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-  schedule:
-    # Every 30 minutes from 9:00 AM to 9:30 PM
-    - cron:  '0,30 9-21 * * *'
-    # At 10:00 PM
-    - cron:  '0 22 * * *'
 
 jobs:
   execute-node-script:
